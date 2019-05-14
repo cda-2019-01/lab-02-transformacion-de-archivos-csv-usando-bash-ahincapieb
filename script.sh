@@ -6,7 +6,7 @@ sed 's/\([0-9]*\)\/\([0-9][0-9]\)\/\([0-9][0-9]\)/estacion4;\1\/2\/3/g' estacion
 # Consolidacion de archivos estaciones
 touch estacionestotal.csv
 cat estacion1a.csv estacion2a.csv estacion3a.csv estacion4a.csv > estacionestotal.csv 
-# Instalacion libreria
+# Instalacion libreria SQL
 sudo apt-get install -y csvkit  
 # Cambio de "," por "."
 sed 's/,/./g' estacionestotal.csv > estacionestotal1.csv
