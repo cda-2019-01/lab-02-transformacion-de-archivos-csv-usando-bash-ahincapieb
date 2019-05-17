@@ -11,7 +11,7 @@ sed 's/\([0-9]*\)\/\([0-9][0-9]\)\/\([0-9][0-9]\)/estacion3;\1\/2\/3/g' estacion
 sed 's/\([0-9]*\)\/\([0-9][0-9]\)\/\([0-9][0-9]\)/estacion4;\1\/2\/3/g' estacion44.csv > estacion4a.csv
 # Consolidacion de archivos estaciones
 touch estacionestotal.csv
-cat estacion1a.csv estacion2a.csv estacion3a.csv estacion4a.csv > estacionestotal.csv  
+awk 'FNR==1 && NR!=1{next;}{print}' estacion1a.csv estacion2a.csv estacion3a.csv estacion4a.csv > estacionestotal.csv  
 # Cambio de "," por "."
 sed 's/,/./g' estacionestotal.csv > estacionestotal1.csv
 # Cambio de separadores ";" por ","
@@ -27,8 +27,6 @@ sed 's/-\([0-9]*\)-/-0\1-/g' estacionestotal5.csv > estacionestotal6.csv
 sed 's/-/,/g' estacionestotal6.csv > estacionestotal7.csv
 # Nombrar columnas
 sed 's/FECHA,/ESTACION,DIA,MES,YEAR,/g' estacionestotal7.csv > estacionestotal8.csv
-# Eliminar espacios en blanco
-sed /^$/d estacionestotal8.csv > estacionestotal9.csv
 # Consultas SQL
 csvsql --query 'select ESTACION, MES, avg(VEL) from estacionestotal8 GROUP BY ESTACION, MES' estacionestotal8.csv >> velocidad-por-mes.csv #
 csvsql --query 'select ESTACION, YEAR, avg(VEL) from estacionestotal8 GROUP BY ESTACION, YEAR' estacionestotal8.csv >> velocidad-por-ano.csv #
