@@ -1,10 +1,14 @@
 # Escriba su código aquí
 #!/bin/bash
+# Borrar encabezados de los archivos estaciones 2, 3 y 4 respectivamente
+sed "1d" estacion2.csv > estacion22.csv
+sed "1d" estacion3.csv > estacion33.csv
+sed "1d" estacion4.csv > estacion44.csv
 # Agregar nombre de la estación
 sed 's/\([0-9][0-9]\)\/\([0-9][0-9]\)\/\([0-9][0-9]\)/estacion1;\1\/2\/3/g' estacion1.csv > estacion1a.csv
-sed 's/\([0-9]*\)\/\([0-9][0-9]\)\/\([0-9][0-9]\)/estacion2;\1\/2\/3/g' estacion2.csv > estacion2a.csv
-sed 's/\([0-9]*\)\/\([0-9][0-9]\)\/\([0-9][0-9]\)/estacion3;\1\/2\/3/g' estacion3.csv > estacion3a.csv
-sed 's/\([0-9]*\)\/\([0-9][0-9]\)\/\([0-9][0-9]\)/estacion4;\1\/2\/3/g' estacion4.csv > estacion4a.csv
+sed 's/\([0-9]*\)\/\([0-9][0-9]\)\/\([0-9][0-9]\)/estacion2;\1\/2\/3/g' estacion22.csv > estacion2a.csv
+sed 's/\([0-9]*\)\/\([0-9][0-9]\)\/\([0-9][0-9]\)/estacion3;\1\/2\/3/g' estacion33.csv > estacion3a.csv
+sed 's/\([0-9]*\)\/\([0-9][0-9]\)\/\([0-9][0-9]\)/estacion4;\1\/2\/3/g' estacion44.csv > estacion4a.csv
 # Consolidacion de archivos estaciones
 touch estacionestotal.csv
 cat estacion1a.csv estacion2a.csv estacion3a.csv estacion4a.csv > estacionestotal.csv  
@@ -23,6 +27,8 @@ sed 's/-\([0-9]*\)-/-0\1-/g' estacionestotal5.csv > estacionestotal6.csv
 sed 's/-/,/g' estacionestotal6.csv > estacionestotal7.csv
 # Nombrar columnas
 sed 's/FECHA,/ESTACION,DIA,MES,YEAR,/g' estacionestotal7.csv > estacionestotal8.csv
+# Eliminar espacios en blanco
+sed /^$/d estacionestotal8.csv > estacionestotal9.csv
 # Consultas SQL
 csvsql --query 'select ESTACION, MES, avg(VEL) from estacionestotal8 GROUP BY ESTACION, MES' estacionestotal8.csv >> velocidad-por-mes.csv #
 csvsql --query 'select ESTACION, YEAR, avg(VEL) from estacionestotal8 GROUP BY ESTACION, YEAR' estacionestotal8.csv >> velocidad-por-ano.csv #
