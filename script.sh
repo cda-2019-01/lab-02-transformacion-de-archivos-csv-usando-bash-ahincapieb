@@ -31,7 +31,6 @@ sed 's/FECHA,/ESTACION,DIA,MES,YEAR,/g' estacionestotal7.csv > estacionestotal8.
 csvsql --query 'select ESTACION, MES, avg(VEL) from estacionestotal8 GROUP BY ESTACION, MES' estacionestotal8.csv >> velocidad-por-mes.csv #
 csvsql --query 'select ESTACION, YEAR, avg(VEL) from estacionestotal8 GROUP BY ESTACION, YEAR' estacionestotal8.csv >> velocidad-por-ano.csv #
 csvsql --query 'select ESTACION, HHMMSS, avg(VEL) from estacionestotal8 GROUP BY ESTACION, HHMMSS' estacionestotal8.csv >> velocidad-por-hora.csv #
-rm estacion*
 head velocidad-por-mes.csv
 head velocidad-por-ano.csv
 head velocidad-por-hora.csv
